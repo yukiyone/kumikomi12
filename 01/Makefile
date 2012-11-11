@@ -24,7 +24,7 @@ TARGET = kzload
 
 #compile option
 CFLAGS = -Wall -mh -nostdinc -nostdlib -fno-builtin
-CFLAGS += -I
+CFLAGS += -I.
 CFLAGS += -Os
 CFLAGS += -DKZLOAD
 
@@ -36,7 +36,7 @@ LFLAGS = -static -T ld.scr -L.
 
 all: $(TARGET)
 
-$(TARGET): $(OBJES)
+$(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(CFLAGS) $(LFLAGS)
 	cp $(TARGET) $(TARGET).elf
 	$(STRIP) $(TARGET)
