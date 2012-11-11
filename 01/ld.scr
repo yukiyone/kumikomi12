@@ -1,5 +1,5 @@
 OUTPUT_ARCH(h8300h)
-ENTRY(*_start*)
+ENTRY("_start")
 
 SECTIONS
 {

@@ -74,7 +74,7 @@ int serial_is_send_enable(int index){
   return (sci->ssr & H8_3069F_SCI_SSR_TDRE);
 }
 /*send one word*/
-int serial_send_byte(int index, unsgned char b){
+int serial_send_byte(int index, unsigned char c){
   volatile struct h8_3069f_sci *sci = regs[index].sci;
 
   while(!serial_is_send_enable(index))
