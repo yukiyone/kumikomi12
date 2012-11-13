@@ -3,9 +3,9 @@
 
 #define SERIAL_SCI_NUM 3
 
-#define H8_3069F_SCI0 ((volatile struct h8_3069f_sci *)0xfffb0)
-#define H8_3069F_SCI1 ((volatile struct h8_3069f_sci *)0xfffb8)
-#define H8_3069F_SCI2 ((volatile struct h8_3069f_sci *)0xfffc0)
+#define H8_3069F_SCI0 ((volatile struct h8_3069f_sci *)0xffffb0)
+#define H8_3069F_SCI1 ((volatile struct h8_3069f_sci *)0xffffb8)
+#define H8_3069F_SCI2 ((volatile struct h8_3069f_sci *)0xffffc0)
 
 struct h8_3069f_sci{
   volatile uint8 smr;

@@ -13,9 +13,9 @@ OBJDUMP = $(BINDIR)/$(ADDNAME)objdump
 RANLIB = $(BINDIR)/$(ADDNAME)ranlib
 STRIP = $(BINDIR)/$(ADDNAME)strip
 
-H8WRITE = ../../tools/h8write/h8write
+H8WRITE = kz_h8write
 
-H8WRITE_SERDEV = /dev/???
+H8WRITE_SERDEV = /dev/cu.PL2303-000013FA
 
 OBJS = vector.o startup.o main.o
 OBJS += lib.o serial.o
@@ -48,7 +48,7 @@ $(TARGET): $(OBJS)
 	$(CC) -c $(CFLAGS) $<
 
 $(TARGET).mot:$(TARGET)
-	$(OBJCOPY) -0 srec $(TARGET)  $(TARGET).mot 
+	$(OBJCOPY) -O srec $(TARGET)  $(TARGET).mot 
 
 image:$(TARGET).mot
 
