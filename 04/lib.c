@@ -102,11 +102,10 @@ int putxval(unsigned long value, int column){
   return 0;
 }
 
-
 unsigned char getc(void)
 {
   unsigned char c = serial_recv_byte(SERIAL_DEFAULT_DEVICE);
-  c = (c == '\r');
+  c = (c == '\r') ? '\n' : c;
   putc(c);
   return c;
 }
