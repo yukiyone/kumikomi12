@@ -55,9 +55,10 @@ int main(void)
   init();
 
   puts("kzload start\n");
+  
+  
   while(1){
     puts("kzload>");
-
     gets(buf); /*シリアルからのコマンド受信*/
     
     if(!strcmp(buf, "load")){

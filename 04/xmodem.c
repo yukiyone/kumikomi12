@@ -19,7 +19,7 @@ static int xmodem_wait(void)
   long cnt = 0;
 
   while(!serial_is_recv_enable(SERIAL_DEFAULT_DEVICE)){
-    if(++cnt >= 200000){
+    if(++cnt >= 2000000){
       cnt = 0;
       serial_send_byte(SERIAL_DEFAULT_DEVICE, XMODEM_NAK);
     }
@@ -48,7 +48,7 @@ static int xmodem_read_block(unsigned char block_number, char *buf)
   for(i = 0; i < XMODEM_BLOCK_SIZE; i++){
     c = serial_recv_byte(SERIAL_DEFAULT_DEVICE);
     *(buf++) = c;
-    check_sum = c; 
+    check_sum += c; 
   }
   
   check_sum ^= serial_recv_byte(SERIAL_DEFAULT_DEVICE);
@@ -59,7 +59,7 @@ static int xmodem_read_block(unsigned char block_number, char *buf)
 }
 
 
-long xmodem_recv(char *buff)
+long xmodem_recv(char *buf)
 {
   int r, receiving = 0;
   long size = 0;
@@ -68,23 +68,23 @@ long xmodem_recv(char *buff)
   while(1){
     if(!receiving)
       xmodem_wait();
-    
+
     c = serial_recv_byte(SERIAL_DEFAULT_DEVICE);
 
     if(c == XMODEM_EOT){
       serial_send_byte(SERIAL_DEFAULT_DEVICE, XMODEM_ACK);
       break;
-    }else if(c == XMODEM_CAN){
+    }else if(c == XMODEM_CAN){      
       return -1;
     }else if(c == XMODEM_SOH){
       receiving++;
-      r = xmodem_read_block(block_number, buff);
+      r = xmodem_read_block(block_number, buf);
       if(r < 0){
 	serial_send_byte(SERIAL_DEFAULT_DEVICE, XMODEM_NAK);
       }else{
 	block_number++;
 	size += r;
-	buff += r;
+	buf += r;
 	serial_send_byte(SERIAL_DEFAULT_DEVICE, XMODEM_ACK);
       }
     }else{
