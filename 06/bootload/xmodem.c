@@ -48,7 +48,7 @@ static int xmodem_read_block(unsigned char block_number, char *buf)
   for(i = 0; i < XMODEM_BLOCK_SIZE; i++){
     c = serial_recv_byte(SERIAL_DEFAULT_DEVICE);
     *(buf++) = c;
-    check_sum = c; 
+    check_sum += c; 
   }
   
   check_sum ^= serial_recv_byte(SERIAL_DEFAULT_DEVICE);
