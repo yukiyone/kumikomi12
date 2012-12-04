@@ -81,7 +81,7 @@ int main(void)
       if(!entry_point){
 	puts("run error");
       }else{
-	puts("starting from entry point:\n");
+	puts("starting from entry point:");
 	putxval((unsigned long) entry_point, 0);
 	puts("\n");
 	f = (void (*)(void)) entry_point;

@@ -64,9 +64,9 @@ static int elf_load_program(struct elf_header *header)
   int i;
   struct elf_program_header *phdr;
 
-  for(i = 0; i<header->program_header_num; i++){
+  for(i = 0; i < header->program_header_num; i++){
     /*get program-header*/
-    phdr = (struct elf_program_header *) ( (char *)header + header->program_header_offset + header->program_header_size +1);
+    phdr = (struct elf_program_header *) ( (char *)header + header->program_header_offset + header->program_header_size * i);
     if(phdr->type != 1)
       continue;
 
