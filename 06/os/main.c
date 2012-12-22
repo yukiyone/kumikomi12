@@ -14,6 +14,7 @@ int main(void)
     gets(buf);
 
     if(!strncmp(buf, "echo", 4)){
+      /*受け取ったデータをエコーバックします*/
       puts(buf + 4);
       puts("\n");
     }else if(!strcmp(buf, "exit")){
