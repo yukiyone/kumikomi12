@@ -34,7 +34,7 @@ typedef struct _kz_thread{
   } syscall;
   
   kz_context context; /*コンテキスト情報*/
-  char dummy[16];
+  char dummy[8];
 } kz_thread;
 
 /*スレッドのレディーキュー*/
@@ -279,10 +279,13 @@ static void call_functions(kz_syscall_type_t type, kz_syscall_param_t *p)
     break;
   case KZ_SYSCALL_TYPE_CHPRI:
     p->un.chpri.ret = thread_chpri(p->un.chpri.priority);
+    break;
   case KZ_SYSCALL_TYPE_KMALLOC:
     p->un.kmalloc.ret = thread_kmalloc(p->un.kmalloc.size);
+    break;
   case KZ_SYSCALL_TYPE_KMFREE:
     p->un.kmfree.ret = thread_kmfree(p->un.kmfree.p);
+    break;
   default:
     break;
   }
