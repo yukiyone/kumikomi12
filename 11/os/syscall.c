@@ -43,7 +43,7 @@ int kz_wakeup(kz_thread_id_t id)
 {
   kz_syscall_param_t param;
   param.un.wakeup.id = id;
-  kz_syscall(KZ_SYSCALL_TYPE_SLEEP, &param);
+  kz_syscall(KZ_SYSCALL_TYPE_WAKEUP, &param);
   return param.un.wakeup.ret;
 }
 
@@ -84,6 +84,7 @@ int kz_send(kz_msgbox_id_t id, int size, char *p)
   kz_syscall_param_t param;
   param.un.send.id = id;
   param.un.send.size = size;
+  param.un.send.p = p;
   kz_syscall(KZ_SYSCALL_TYPE_SEND, &param);
   return param.un.send.ret;
 }

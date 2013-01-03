@@ -8,11 +8,15 @@ int test10_1_main(int argc, char *argv[])
   int i, j;
 
   puts("test10_1 started\n");
-  for(i = 0; i<=56; i += 4){
+
+  for(i = 4; i<=56; i += 4){
+
+    puts("test10_1 started 2\n");
     p1 = kz_kmalloc(i);
+    puts("test10_1 started 3\n");
     p2 = kz_kmalloc(i);
 
-    for(j = 0; j < 1 - 1; j++){
+    for(j = 0; j < i - 1; j++){
       p1[j] = 'a';
       p2[j] = 'b';
     }

@@ -31,17 +31,18 @@ static int kzmem_init_pool(kzmem_pool *p)
 {
   int i;
   kzmem_block *mp;
-  kzmem_block **mmp;
+  kzmem_block **mpp;
   
   extern char freearea; /*リンカスクリプトで定義されている領域*/
   static char *area = &freearea;
 
   mp = (kzmem_block *)area;
+  mpp = &p->free;
   for(i = 0; i < p->num; i++){
-    *mmp = mp;
+    *mpp = mp;
     memset(mp, 0, sizeof(*mp));
     mp->size = p->size;
-    mmp = &(mp->next);
+    mpp = &(mp->next);
     mp = (kzmem_block *)((char *)mp + p->size);
     area += p->size;
   }
@@ -62,23 +63,24 @@ void *kzmem_alloc(int size)
   int i;
   kzmem_block *mp;
   kzmem_pool *p;
+  
   for(i = 0; i<MEMORY_AREA_NUM; i++){
     p = &pool[i];
+  
     if(size <= p->size - sizeof(kzmem_block)){
       if(p->free == NULL){
 	kz_sysdown();
 	return NULL;
       }
+      /*解放済みリンクリストから領域を取得する　*/
+      mp = p->free;
+      p->free = p->free->next;
+      mp->next = NULL;
+      
+      return mp + 1;
     }
-    
-    /*解放済みリンクリストから領域を取得する　*/
-    mp = p->free;
-    p->free = p->free->next;
-    mp->next = NULL;
-    
-    return mp + 1;
   }
-
+  
   kz_sysdown();
   return NULL;
 }
@@ -87,7 +89,9 @@ void kzmem_free(void *mem)
   int i;
   kzmem_block *mp;
   kzmem_pool *p;
-
+  
+  mp = ((kzmem_block *)mem - 1);
+  
   for(i = 0; i<MEMORY_AREA_NUM; i++){
     p = &pool[i];
     if(mp->size == p->size){

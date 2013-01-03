@@ -10,7 +10,7 @@ int test11_1_main(int argc, char *argv[])
   puts("test11_1 stared. \n");
 
   /*静的領域をメッセージで受信*/
-  puts("test11_1 recv in. \n");
+  puts("test11_1 recv in. \n");  
   kz_recv(MSGBOX_ID_MSGBOX1, &size, &p);
   puts("test11_1 rece out. \n");
   puts(p);
