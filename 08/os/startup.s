@@ -9,8 +9,7 @@ _start:
 	bra      1b
 
 	.global _dispatch
-	.type   _dispatch,@function
-
+#	.type   _dispatch,@function
 _dispatch:
 	mov.l    @er0,er7
 	mov.l    @er7+,er0

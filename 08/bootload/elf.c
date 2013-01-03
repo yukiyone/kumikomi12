@@ -66,12 +66,17 @@ static int elf_load_program(struct elf_header *header)
 
   for(i = 0; i < header->program_header_num; i++){
     /*get program-header*/
-    phdr = (struct elf_program_header *) ( (char *)header + header->program_header_offset + header->program_header_size * i);
+    phdr = (struct elf_program_header *)
+      ((char *)header + header->program_header_offset + 
+       header->program_header_size * i);
+    
     if(phdr->type != 1)
       continue;
 
-    memcpy((char *)phdr->physical_addr, (char *)header + phdr->offset, phdr->file_size);
-    memset((char *)phdr->physical_addr + phdr->file_size, 0, phdr->memory_size - phdr->file_size);
+    memcpy((char *)phdr->physical_addr, (char *)header + phdr->offset,
+	   phdr->file_size);
+    memset((char *)phdr->physical_addr + phdr->file_size, 0, 
+	   phdr->memory_size - phdr->file_size);
 
   }
     

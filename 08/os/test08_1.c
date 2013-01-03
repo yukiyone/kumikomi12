@@ -11,10 +11,10 @@ int test08_1_main(int argc, char *argv[])
     puts("> ");
     gets(buf);
     if(!strncmp(buf, "echo", 4)){
-
-    }else if(!strcmp(buf, "exit")){
       puts(buf + 4);
       puts("\n");
+    }else if(!strcmp(buf, "exit")){
+      break;
     }else{
       puts("unkown \n");
     }
