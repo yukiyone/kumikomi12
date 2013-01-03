@@ -11,11 +11,18 @@ typedef short softvec_type_t;
 typedef void (*softvec_handler_t)(softvec_type_t type, unsigned long sp);
 
 /*ソフトウェア 割り込みベクタの位置*/
-#define SOFTVEC ((softvec_handler_t *)SOFTVEC_ADDR)
+#define SOFTVECS ((softvec_handler_t *)SOFTVEC_ADDR)
 
 #define INTR_ENABLE asm volatile ("andc.b #0x3f,ccr")
 #define INTR_DISABLE asm volatile ("orc.b #0xc0,ccr")
 
+/*ソフトウェア・割り込みベクタの初期化*/
+int softvec_init(void);
 
+/*ソフトウェア・割り込みベクタの設定*/
+int softvec_setintr(softvec_type_t type, softvec_handler_t handler);
+
+/*共通割り込みハンドラ*/
+void interrupt(softvec_type_t type, unsigned long sp);
 
 #endif

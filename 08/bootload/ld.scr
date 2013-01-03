@@ -61,5 +61,5 @@ SECTIONS
 	} > bootstack
 	.intrstack : {
 	     _intrstack = .;
-	}
+	} > intrstack
 }

@@ -69,7 +69,10 @@ static kz_msgbox msgboxes[MSGBOX_ID_NUM];
 
 void dispatch(kz_context *context);
 
-/*カレント・スレッドをレディーキューから抜き出す*/
+/*
+  カレント・スレッドをレディーキューから抜き出す
+  現在のkz_thread型のcurrentをキューから削除するイメージ
+*/
 static int getcurrent(void)
 {  
   if(current == NULL){
@@ -93,7 +96,9 @@ static int getcurrent(void)
   return 0;
 }
 
-/*カレント・スレッドをレディーキューにつなげる*/
+/*カレント・スレッドをレディーキューにつなげる
+  kz_thread型であるcurrentに設定されているTCB(タスクコントロールスレッド)を後ろに！
+*/
 static int putcurrent(void)
 {
   if(current == NULL){
@@ -190,7 +195,7 @@ static kz_thread_id_t thread_run(kz_func_t func, char *name, int priority, int s
   /*システムコールを呼び出したスレッドをレディーキューに戻す*/
   putcurrent();
   
-  /*真に作成したスレッドを、レディーキューに接続する*/
+  /*作成したスレッドを、レディーキューに接続する*/
   current = thp;
   putcurrent();
 

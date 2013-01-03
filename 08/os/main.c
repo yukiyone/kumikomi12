@@ -15,7 +15,7 @@ int main(void)
 {
   INTR_DISABLE;
 
-  puts("kozos boot succeed!\n");
+  puts("kozos boot succeed!!!!\n");
   kz_start(start_threads, "start", 0x100, 0, NULL);
   return 0;
 }
